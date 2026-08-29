@@ -1,0 +1,16 @@
+ATLAS IDENTITY CARD — SIGNATURE D'AUTEUR
+==========================================
+
+Auteur / pseudonyme : Haizenchi
+Application         : Atlas Identity Card
+Version             : 1.9
+
+Contrôle d'intégrité SHA-256 :
+95373e37bbf6f184861d895b798ae24831d1f49236a4353f113c28c048ec266c  index.html
+327518ff529044304a0911d653da99a9b4ba504bc1164e8fd9eddc5485c14545  css/style.css
+4f73b6173125151b2d3f93dcf1872bad31b176ab940b806d24db8baaa539ad78  script/script.js
+06410cfa139ffda798d8ec8f57e98dd03536e04aa6eefa0ed3cdbfa81b367ce9  README.md
+
+Note : ce manifeste atteste l'attribution et permet de vérifier l'intégrité
+des fichiers. Il ne constitue pas une signature cryptographique par certificat
+de confiance, qui nécessiterait une clé privée appartenant à Haizenchi.

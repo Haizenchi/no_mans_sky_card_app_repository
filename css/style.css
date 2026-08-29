@@ -1,0 +1,21 @@
+/* Atlas Identity Card — création Haizenchi */
+:root{
+  --bg:#0b1016; --panel:#111922; --panel2:#172330; --ink:#edf3f7; --muted:#94a4b4;
+  --gold:#e3a72d; --cyan:#19a6d2; --line:#2b3b49; --paper:#f6f5f1; --navy:#10233a;
+}
+*{box-sizing:border-box} html,body{margin:0;min-height:100%;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(circle at 30% 10%,#162432 0,#0b1016 48%,#070a0d 100%);color:var(--ink)}
+body{padding:14px 20px}
+.app{max-width:1700px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:18px;align-items:start}
+.preview-card{background:#0e151d;border:1px solid #253443;border-radius:18px;padding:14px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.canvas-wrap{position:relative;width:100%;aspect-ratio:16/10;border-radius:13px;overflow:hidden;background:#06090c;box-shadow:inset 0 0 0 1px #263746}
+canvas{display:block;width:100%;height:100%}
+.panel{background:linear-gradient(180deg,#141f2a,#0e161f);border:1px solid #293a49;border-radius:18px;padding:15px 18px;position:sticky;top:14px;box-shadow:0 20px 60px rgba(0,0,0,.28)}
+h1{margin:0 0 4px;font-size:22px;letter-spacing:.03em}.sub{color:var(--muted);font-size:12px;margin-bottom:12px}
+.field{margin:0 0 11px}.field label{display:flex;justify-content:space-between;gap:8px;color:#b8c5d0;font-weight:700;font-size:12px;margin:0 0 6px;letter-spacing:.04em}.field small{font-weight:400;color:#718292}
+input[type=text]{width:100%;height:43px;border-radius:9px;border:1px solid #314657;background:#0b131b;color:#f5f8fa;padding:0 12px;font-size:15px;outline:none;transition:.15s}input[type=text]:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(25,166,210,.12)}
+.file{display:flex;gap:8px;align-items:stretch}.file input{display:none}
+button,.file-label{border:0;border-radius:9px;height:40px;min-height:40px;padding:0 12px;font-weight:800;cursor:pointer;letter-spacing:.02em;transition:.15s;font-size:13px;line-height:1}.file-label{display:inline-flex;align-items:center;justify-content:center;margin:0}.file button{display:inline-flex;align-items:center;justify-content:center;margin:0}.file-label,.secondary{background:#1d2b37;color:#dfe8ef;border:1px solid #344959}.file-label:hover,.secondary:hover{background:#263846}.primary{width:100%;background:linear-gradient(135deg,#e3a72d,#f0bd4a);color:#0d1216;box-shadow:0 8px 20px rgba(227,167,45,.16)}.primary:hover{transform:translateY(-1px);filter:brightness(1.04)}
+.row{display:flex;gap:8px}.row>*{flex:1}.slider{margin:8px 0 0}.slider-line{display:grid;grid-template-columns:58px 1fr 42px;gap:8px;align-items:center;color:#91a1af;font-size:11px}.slider-line input{width:100%}.slider-line output{text-align:right;color:#cbd6de;font-variant-numeric:tabular-nums}
+.divider{height:1px;background:#283846;margin:12px 0}.status{min-height:26px;margin-top:8px;font-size:12px;color:#9fafbb;line-height:1.4}.badge{display:inline-flex;align-items:center;gap:6px;background:#0b151c;border:1px solid #2b4050;border-radius:99px;padding:6px 9px;margin-top:4px;color:#b8c6d0;font-size:11px}.dot{width:7px;height:7px;border-radius:50%;background:#50c878;box-shadow:0 0 9px #50c878}
+.portrait-tools[hidden]{display:none}
+@media(max-width:1050px){body{padding:10px}.app{grid-template-columns:1fr}.panel{position:static}.preview-card{padding:8px}.canvas-wrap{border-radius:10px}}

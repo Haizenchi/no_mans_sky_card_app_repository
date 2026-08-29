@@ -1,0 +1,62 @@
+<!doctype html>
+<!-- Atlas Identity Card — création Haizenchi -->
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="author" content="Haizenchi" />
+<meta name="application-name" content="Atlas Identity Card" />
+<meta name="creator" content="Haizenchi" />
+<title>Atlas Identity Card — Générateur RP</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-author="Haizenchi">
+<div class="app">
+  <section class="preview-card">
+    <div class="canvas-wrap"><canvas id="card" width="1600" height="1000" aria-label="Aperçu de la carte d'identité"></canvas></div>
+  </section>
+
+  <aside class="panel">
+    <h1>Atlas Identity Card</h1>
+    <div class="sub" title="Fonctionnement local, sans compte ni serveur.">Générateur RP • export PNG uniquement • fonctionnement local</div>
+
+    <div class="field"><label for="name">Nom <small>32 caractères max.</small></label><input id="name" type="text" maxlength="32" value="" autocomplete="off" /></div>
+    <div class="field"><label for="race">Race <small>24 caractères max.</small></label><input id="race" type="text" maxlength="24" value="" autocomplete="off" /></div>
+    <div class="field"><label for="code">Code <small>26 caractères max.</small></label><input id="code" type="text" maxlength="26" value="" autocomplete="off" spellcheck="false" /></div>
+    <div class="field"><label for="discord">Discord <small>32 caractères max.</small></label><input id="discord" type="text" maxlength="32" value="" autocomplete="off" spellcheck="false" /></div>
+
+    <div class="divider"></div>
+
+    <div class="field">
+      <label>Portrait <small>JPG / PNG / WEBP</small></label>
+      <div class="file"><label class="file-label" for="portrait">Choisir une image</label><input id="portrait" type="file" accept="image/png,image/jpeg,image/webp"/><button id="removePortrait" class="secondary" type="button">Retirer</button></div>
+      <div class="portrait-tools" id="portraitTools" hidden>
+        <div class="slider">
+          <div class="slider-line"><span>Zoom</span><input id="zoom" type="range" min="1" max="3.5" step="0.01" value="1"/><output id="zoomOut">1.00×</output></div>
+          <div class="slider-line"><span>X</span><input id="offsetX" type="range" min="-1" max="1" step="0.01" value="0"/><output id="xOut">0</output></div>
+          <div class="slider-line"><span>Y</span><input id="offsetY" type="range" min="-1" max="1" step="0.01" value="0"/><output id="yOut">0</output></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="field"><label for="resolution">Résolution PNG</label>
+      <select id="resolution" style="width:100%;height:43px;border-radius:9px;border:1px solid #314657;background:#0b131b;color:#f5f8fa;padding:0 10px;font-size:14px">
+        <option value="1600">1600 × 1000 — réseaux</option>
+        <option value="2400" selected>2400 × 1500 — haute qualité</option>
+        <option value="3200">3200 × 2000 — très haute qualité</option>
+      </select>
+    </div>
+
+    <button id="download" class="primary" type="button">Exporter la carte en PNG</button>
+    <div class="row" style="margin-top:8px"><button id="reset" class="secondary" type="button">Réinitialiser</button></div>
+    <div class="status" id="status"></div>
+    <div class="badge"><span class="dot"></span>Données traitées localement dans le navigateur</div>
+  </aside>
+</div>
+
+<script src="script/script.js"></script>
+</body>
+</html>
