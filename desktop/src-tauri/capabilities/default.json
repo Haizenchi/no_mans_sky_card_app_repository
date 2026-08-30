@@ -1,12 +1,18 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "main-capability",
-  "description": "Minimal permissions for NMS Passport: native file dialogs and read/write access only to paths explicitly selected by the user.",
-  "windows": ["main"],
+  "description": "Minimal NMS Passport desktop permissions: open/save dialogs and read/write only files explicitly selected by the user.",
+  "windows": [
+    "main"
+  ],
   "permissions": [
     "core:default",
-    "dialog:default",
-    "fs:read-files",
-    "fs:write-files"
+    "dialog:allow-open",
+    "dialog:allow-save",
+    "fs:allow-read-file",
+    "fs:allow-write-file"
+  ],
+  "platforms": [
+    "windows"
   ]
 }

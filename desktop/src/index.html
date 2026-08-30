@@ -1,16 +1,15 @@
 <!doctype html>
-<!-- NMS Passport Desktop v1.0.0 — Web core v2.2 — Haizenchi -->
+<!-- NMS Passport Desktop v2.0.0 — Web core v2.2 — Haizenchi -->
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#10233a" />
   <meta name="author" content="Haizenchi" />
   <meta name="creator" content="Haizenchi" />
   <meta name="application-name" content="NMS Passport" />
   <meta name="description" content="Community toolkit for creating Traveller, ship, base and discovery cards for No Man's Sky." />
   <title>NMS Passport Desktop</title>
-  <link rel="icon" href="assets/icons/icon-192.png" />
+  <link rel="icon" type="image/svg+xml" href="assets/icons/atlas-emblem.svg" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body data-author="Haizenchi">
@@ -21,7 +20,7 @@
       </span>
       <div>
         <strong>NMS Passport</strong>
-        <span>Atlas Identity Toolkit <b>v2.2 · Desktop</b></span>
+        <span>Atlas Identity Toolkit <b>Desktop v2.0</b></span>
       </div>
     </div>
     <div class="top-actions">
@@ -32,7 +31,6 @@
           <option value="fr">FR</option>
         </select>
       </label>
-      <button id="installPwa" class="ghost" type="button" hidden data-i18n="ui.installApp">Install app</button>
       <button id="previewOnly" class="ghost" type="button" data-i18n="ui.previewOnly">Preview only</button>
     </div>
   </header>
@@ -47,9 +45,8 @@
     </div>
     <div class="data-zone">
       <button id="exportJson" class="secondary" type="button" data-i18n="ui.exportJson">Export JSON</button>
-      <label class="file-label compact" for="importJson" data-i18n="ui.importJson">Import JSON</label>
-      <input id="importJson" type="file" accept="application/json,.json" hidden />
-      <button id="copyShare" class="secondary" type="button" data-i18n="ui.copyLink">Copy link</button>
+      <button id="importJson" class="secondary" type="button" data-i18n="ui.importJson">Import JSON</button>
+      <button id="copyShare" class="secondary" type="button" data-i18n="ui.copyData">Copy data</button>
     </div>
   </section>
 
@@ -87,7 +84,7 @@
           </select>
         </div>
         <div class="field">
-          <label for="exportFormat" data-i18n="ui.pngFormat">PNG format</label>
+          <label for="exportFormat" data-i18n="ui.cardLayout">Card layout</label>
           <select id="exportFormat">
             <option value="card" data-i18n="ui.cardFormat">Card 16:10</option>
             <option value="square" data-i18n="ui.squareFormat">Square 1:1</option>
@@ -103,17 +100,17 @@
           <div class="field"><label for="idRace" data-i18n="ui.race">Race</label><input id="idRace" type="text" maxlength="24" autocomplete="off" /></div>
           <div class="field"><label for="idRole" data-i18n="ui.role">Role</label><select id="idRole"></select></div>
         </div>
-        <div class="field code-field"><label for="idCode" data-i18n="ui.travellerCode">Traveller code</label><div class="inline"><input id="idCode" type="text" maxlength="26" autocomplete="off" spellcheck="false" /><button id="generateCode" class="secondary small" type="button" data-i18n="ui.generate">Generate</button></div></div>
+        <div class="field"><label for="idCode" data-i18n="ui.travellerCode">Traveller code</label><div class="inline"><input id="idCode" type="text" maxlength="26" autocomplete="off" spellcheck="false" /><button id="generateCode" class="secondary small" type="button" data-i18n="ui.generate">Generate</button></div></div>
         <div class="field"><label for="idDiscord">Discord</label><input id="idDiscord" type="text" maxlength="32" autocomplete="off" spellcheck="false" /></div>
         <div class="two-col">
           <div class="field"><label for="idGalaxy" data-i18n="ui.galaxy">Galaxy</label><select id="idGalaxy"></select></div>
           <div class="field"><label for="idGalaxyCustom" data-i18n="ui.customName">Custom name</label><input id="idGalaxyCustom" type="text" maxlength="28" data-i18n-placeholder="ui.optional" placeholder="Optional" autocomplete="off" /></div>
         </div>
         <div class="divider"></div>
-        <div class="field"><label><span data-i18n="ui.portrait">Portrait</span> <small>JPG / PNG / WEBP</small></label><div class="file"><label class="file-label" for="identityMedia" data-i18n="ui.chooseImage">Choose image</label><input id="identityMedia" type="file" accept="image/png,image/jpeg,image/webp" hidden /><button class="secondary media-remove" data-media-remove="identity" type="button" data-i18n="ui.remove">Remove</button></div></div>
+        <div class="field"><label><span data-i18n="ui.portrait">Portrait</span> <small>JPG / PNG / WEBP</small></label><div class="file"><button class="secondary media-pick" data-media-pick="identity" type="button" data-i18n="ui.chooseImage">Choose image</button><button class="secondary media-remove" data-media-remove="identity" type="button" data-i18n="ui.remove">Remove</button></div></div>
         <div class="media-tools" data-media-tools="identity" hidden></div>
         <div class="divider"></div>
-        <div class="glyph-section" data-glyph-section="identity"></div>
+        <div data-glyph-section="identity"></div>
       </section>
 
       <section class="module-form" data-form="ship">
@@ -131,10 +128,10 @@
           <div class="field"><label for="shipManeuver" data-i18n="ui.maneuverability">Maneuverability</label><input id="shipManeuver" type="text" maxlength="12" inputmode="decimal" /></div>
         </div>
         <div class="divider"></div>
-        <div class="field"><label data-i18n="ui.shipCapture">Ship screenshot</label><div class="file"><label class="file-label" for="shipMedia" data-i18n="ui.chooseImage">Choose image</label><input id="shipMedia" type="file" accept="image/png,image/jpeg,image/webp" hidden /><button class="secondary media-remove" data-media-remove="ship" type="button" data-i18n="ui.remove">Remove</button></div></div>
+        <div class="field"><label data-i18n="ui.shipCapture">Ship screenshot</label><div class="file"><button class="secondary media-pick" data-media-pick="ship" type="button" data-i18n="ui.chooseImage">Choose image</button><button class="secondary media-remove" data-media-remove="ship" type="button" data-i18n="ui.remove">Remove</button></div></div>
         <div class="media-tools" data-media-tools="ship" hidden></div>
         <div class="divider"></div>
-        <div class="glyph-section" data-glyph-section="ship"></div>
+        <div data-glyph-section="ship"></div>
       </section>
 
       <section class="module-form" data-form="base">
@@ -144,10 +141,10 @@
         <div class="two-col"><div class="field"><label for="basePlanet" data-i18n="ui.planet">Planet</label><input id="basePlanet" type="text" maxlength="30" /></div><div class="field"><label for="baseSystem" data-i18n="ui.system">System</label><input id="baseSystem" type="text" maxlength="30" /></div></div>
         <div class="field"><label for="baseNote" data-i18n="ui.shortDescription">Short description</label><textarea id="baseNote" maxlength="110" rows="3" data-i18n-placeholder="ui.baseNotePlaceholder" placeholder="View, purpose, services, notable features…"></textarea></div>
         <div class="divider"></div>
-        <div class="field"><label data-i18n="ui.baseCapture">Base screenshot</label><div class="file"><label class="file-label" for="baseMedia" data-i18n="ui.chooseImage">Choose image</label><input id="baseMedia" type="file" accept="image/png,image/jpeg,image/webp" hidden /><button class="secondary media-remove" data-media-remove="base" type="button" data-i18n="ui.remove">Remove</button></div></div>
+        <div class="field"><label data-i18n="ui.baseCapture">Base screenshot</label><div class="file"><button class="secondary media-pick" data-media-pick="base" type="button" data-i18n="ui.chooseImage">Choose image</button><button class="secondary media-remove" data-media-remove="base" type="button" data-i18n="ui.remove">Remove</button></div></div>
         <div class="media-tools" data-media-tools="base" hidden></div>
         <div class="divider"></div>
-        <div class="glyph-section" data-glyph-section="base"></div>
+        <div data-glyph-section="base"></div>
       </section>
 
       <section class="module-form" data-form="discovery">
@@ -158,15 +155,22 @@
         <div class="two-col"><div class="field"><label for="discBiome">Biome</label><input id="discBiome" type="text" maxlength="24" /></div><div class="field"><label for="discWeather" data-i18n="ui.weather">Weather</label><input id="discWeather" type="text" maxlength="24" /></div></div>
         <div class="two-col"><div class="field"><label for="discSentinels" data-i18n="ui.sentinels">Sentinels</label><input id="discSentinels" type="text" maxlength="24" /></div><div class="field"><label for="discResources" data-i18n="ui.resources">Resources</label><input id="discResources" type="text" maxlength="32" /></div></div>
         <div class="divider"></div>
-        <div class="field"><label data-i18n="ui.discoveryCapture">Discovery screenshot</label><div class="file"><label class="file-label" for="discoveryMedia" data-i18n="ui.chooseImage">Choose image</label><input id="discoveryMedia" type="file" accept="image/png,image/jpeg,image/webp" hidden /><button class="secondary media-remove" data-media-remove="discovery" type="button" data-i18n="ui.remove">Remove</button></div></div>
+        <div class="field"><label data-i18n="ui.discoveryCapture">Discovery screenshot</label><div class="file"><button class="secondary media-pick" data-media-pick="discovery" type="button" data-i18n="ui.chooseImage">Choose image</button><button class="secondary media-remove" data-media-remove="discovery" type="button" data-i18n="ui.remove">Remove</button></div></div>
         <div class="media-tools" data-media-tools="discovery" hidden></div>
         <div class="divider"></div>
-        <div class="glyph-section" data-glyph-section="discovery"></div>
+        <div data-glyph-section="discovery"></div>
       </section>
 
       <div class="export-zone">
-        <div class="field"><label for="resolution" data-i18n="ui.quality">Quality</label><select id="resolution"><option value="1" data-i18n="ui.standard">Standard</option><option value="1.5" selected data-i18n="ui.highQuality">High quality</option><option value="2" data-i18n="ui.veryHighQuality">Very high quality</option></select></div>
-        <button id="download" class="primary" type="button" data-i18n="ui.exportPng">Export PNG</button>
+        <div class="two-col">
+          <div class="field"><label for="resolution" data-i18n="ui.renderQuality">Render quality</label><select id="resolution"><option value="1" data-i18n="ui.standard">Standard</option><option value="1.5" selected data-i18n="ui.highQuality">High quality</option><option value="2" data-i18n="ui.veryHighQuality">Very high quality</option></select></div>
+          <div class="field"><label for="imageFormat" data-i18n="ui.imageFormat">Image format</label><select id="imageFormat"><option value="png">PNG</option><option value="jpeg">JPG</option><option value="webp">WebP</option></select></div>
+        </div>
+        <div class="field compression-quality" id="imageQualityField" hidden>
+          <label for="imageQuality"><span data-i18n="ui.compressionQuality">Compression quality</span><output id="imageQualityOut">92%</output></label>
+          <input id="imageQuality" type="range" min="60" max="100" step="1" value="92" />
+        </div>
+        <button id="download" class="primary" type="button" data-i18n="ui.exportImage">Export image</button>
         <button id="resetModule" class="secondary" type="button" data-i18n="ui.resetModule">Reset this module</button>
         <div class="status" id="status" aria-live="polite"></div>
       </div>

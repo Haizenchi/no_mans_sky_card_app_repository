@@ -1,63 +1,71 @@
-# NMS Passport Desktop v1.0.0
+# NMS Passport Desktop v2.0.0
 
 Desktop edition of **NMS Passport**, by **Haizenchi**.
 
-This package is designed to live alongside the existing Vercel/web edition in the same GitHub repository:
+This package is designed to be copied into the existing NMS Passport GitHub repository without replacing the Vercel/web edition:
 
 ```text
 repo/
-├── index.html                 # existing web app
-├── css/                       # existing web app
-├── script/                    # existing web app
-├── assets/                    # existing web app
-├── desktop/                   # desktop edition (this package)
+├── index.html                 # web edition
+├── css/                       # web edition
+├── script/                    # web edition
+├── assets/                    # web edition
+├── desktop/                   # Windows desktop edition
 └── .github/workflows/
     └── build-desktop.yml
 ```
 
-## What the desktop edition changes
+## Desktop v2 highlights
 
-- Keeps the current NMS Passport v2.2 FR/EN interface and card engine.
-- Runs in its own native Windows application window through Tauri 2.
-- Works offline; no Vercel server is required to launch it.
-- Removes the need for the PWA install flow inside the desktop app.
-- PNG and JSON exports use the native Windows **Save As** dialog.
-- Image and JSON imports still use the normal operating-system file picker.
-- Local profiles remain stored locally in the embedded WebView data store.
-- The desktop app only exposes file-system read/write APIs for files explicitly selected by the user through a native dialog.
+- True Windows GUI executable: release builds no longer open a console window.
+- FR/EN interface and the four NMS Passport modules are preserved.
+- The PWA install button and all service-worker/PWA logic are removed from the desktop source.
+- Native Windows file dialogs are used for image selection, JSON import, JSON export and image export.
+- Export formats: **PNG, JPG and WebP**.
+- JPG/WebP compression quality is adjustable from 60–100%; PNG remains lossless.
+- Card layouts remain available in 16:10, square 1:1 and banner 16:9.
+- The desktop QR contains a compact `NMSP2:` payload and never embeds a local Windows path.
+- Local profiles remain in the WebView profile store (IndexedDB) and survive normal app restarts/updates as long as the app identifier remains `com.haizenchi.nmspassport`.
+- Tauri permissions are limited to native open/save dialogs plus reading/writing files selected by the user.
+- Windows build artifacts are normalized to:
+  - `NMS-Passport.exe`
+  - `NMS-Passport-Setup.exe`
+  - `SHA256SUMS.txt`
 
-## Easiest Windows build: GitHub Actions
+## GitHub Actions build
 
-Copy the contents of this package into the root of your existing repository, commit and push it.
+Copy this package into the root of the repository, commit and push it. Then:
 
-Then on GitHub:
-
-1. Open **Actions**.
+1. Open **Actions** on GitHub.
 2. Select **Build NMS Passport Desktop**.
 3. Click **Run workflow**.
-4. Wait for the Windows build to finish.
-5. Open the completed run and download the **NMS-Passport-Windows** artifact.
+4. Download the `NMS-Passport-Desktop-v2.0.0-Windows` artifact when the job is green.
 
-The artifact contains the NSIS installer and the raw Windows executable produced by Tauri.
+The workflow also runs automatically for tags matching `desktop-v*`, for example:
 
-You can also create and push a tag such as `desktop-v1.0.0`; the workflow will run automatically.
+```bash
+git tag desktop-v2.0.0
+git push origin desktop-v2.0.0
+```
 
 ## Local Windows build
 
-Tauri requires Rust, Microsoft C++ Build Tools and Microsoft Edge WebView2 for Windows development. Once those prerequisites are installed:
+Install the current Tauri Windows prerequisites (Rust, Microsoft C++ Build Tools and Edge WebView2), then:
 
 ```bash
 cd desktop
-npm install
+npm install --no-audit --no-fund
 npm run desktop:build
 ```
 
-The installer is generated under:
+The raw executable is created under `desktop/src-tauri/target/release/` and the NSIS installer under `desktop/src-tauri/target/release/bundle/nsis/`.
 
-```text
-desktop/src-tauri/target/release/bundle/nsis/
-```
+## Security model
+
+The desktop wrapper exposes no shell, HTTP-client, camera, microphone, geolocation or broad filesystem capability. The frontend can request only open/save dialogs and file read/write commands. Paths selected by Tauri's native dialogs are added to the runtime filesystem scope for that session.
+
+Imported images are signature-checked as PNG/JPEG/WebP, capped at 18 MB and dimension-validated before being stored. JSON imports are size-limited and sanitized through the same data schema as the web edition.
 
 ## Code signing
 
-The application metadata identifies **Haizenchi** as publisher/author, but Windows will still show an unknown/unverified publisher until the executable is signed with a real Windows code-signing certificate. No private signing key is included in this repository.
+The application metadata identifies **Haizenchi** as publisher/author. This is not an Authenticode signature. Windows will continue to show an unknown/unverified publisher until releases are signed with a real Windows code-signing certificate controlled by Haizenchi.
