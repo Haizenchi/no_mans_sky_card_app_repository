@@ -1,0 +1,18 @@
+[package]
+name = "nms-passport"
+version = "1.0.0"
+description = "NMS Passport Desktop"
+authors = ["Haizenchi"]
+edition = "2021"
+
+[lib]
+name = "nms_passport_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+tauri-plugin-fs = "2"

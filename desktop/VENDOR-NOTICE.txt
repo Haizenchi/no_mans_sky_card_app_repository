@@ -1,0 +1,12 @@
+QR Code engine
+==============
+
+The bundled QR encoder in script/vendor/qrcode-browser.js is adapted from the
+QRCode for JavaScript implementation by Kazuhiko Arase (2009), distributed
+under the MIT License. The browser bundle was produced locally from the vendor
+sources shipped with qrcode-terminal.
+
+Original notice:
+Copyright (c) 2009 Kazuhiko Arase
+Licensed under the MIT License.
+"QR Code" is a registered trademark of DENSO WAVE INCORPORATED.

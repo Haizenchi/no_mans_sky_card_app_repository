@@ -1,0 +1,15 @@
+{
+  "name": "nms-passport-desktop",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Desktop edition of NMS Passport by Haizenchi",
+  "author": "Haizenchi",
+  "scripts": {
+    "tauri": "tauri",
+    "desktop:dev": "tauri dev",
+    "desktop:build": "tauri build"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.11.0"
+  }
+}

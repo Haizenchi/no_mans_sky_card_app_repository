@@ -1,83 +1,63 @@
-# NMS Passport — Atlas Identity Toolkit v2.1
+# NMS Passport Desktop v1.0.0
 
-Application web statique créée par **Haizenchi** pour générer et partager des fiches communautaires inspirées de No Man's Sky.
+Desktop edition of **NMS Passport**, by **Haizenchi**.
 
-## Modules
-
-- **Identité** : voyageur, race, fonction, code, Discord, galaxie, portrait, adresse portail et numéro de série dynamique.
-- **Vaisseau** : nom, type, classe, statistiques, système, galaxie, capture et glyphes.
-- **Base** : nom, type, planète, système, description, capture et adresse portail.
-- **Découverte** : catégorie, planète, biome, météo, sentinelles, ressources, capture et glyphes.
-
-## Fonctions
-
-- 5 thèmes : Atlas, Korvax, Vy'keen, Gek et Autophage.
-- Sélecteur de 12 glyphes avec représentation hexadécimale 0–F.
-- QR code réel : lien partageable sur HTTPS/localhost, données compactes uniquement en ouverture locale `file://`.
-- Profils multiples enregistrés localement dans IndexedDB.
-- Import / export JSON complet, images incluses.
-- Export PNG en carte 16:10, carré 1:1 et bannière 16:9.
-- Portraits/captures repositionnables par glisser-déposer et zoom à la molette.
-- PWA installable et cache hors-ligne après la première visite.
-- Aucun backend requis : le traitement des données et images reste côté navigateur.
-
-## Numéro de série d'identité
-
-Le format est : `AT-E01-CP-7F9K-16`.
-
-- `AT` : autorité Atlas.
-- `E01` : numéro de galaxie (`E01` = Euclid).
-- `CP` : code de fonction (`CP` = Capitaine, `PL` = Pilote, `EX` = Explorateur, etc.).
-- `7F9K` : fragment extrait du code voyageur.
-- `16` : référence Atlas / 16.
-
-Tant que les champs correspondants sont vides, leurs segments utilisent des valeurs neutres (`E00`, `XX`, `XXXX`).
-
-## Sécurité et confidentialité
-
-- Politique CSP stricte sur Vercel : scripts, styles, workers et connexions limités à l’origine de l’application ; objets, frames et scripts inline interdits.
-- Trusted Types imposé sur les navigateurs compatibles afin de réduire la surface XSS.
-- Protection anti-iframe (`frame-ancestors 'none'` + `X-Frame-Options: DENY`).
-- `Permissions-Policy` désactive les capacités navigateur inutiles : caméra, micro, géolocalisation, capteurs, paiement, USB, Bluetooth, etc.
-- Les imports JSON sont limités en taille, contrôlés par schéma et nettoyés champ par champ ; les clés inattendues sont ignorées.
-- Les images importées sont limitées en taille, type et dimensions avant réutilisation.
-- Les liens partagés sont limités et validés avant chargement. Ils sont encodés en Base64URL, **pas chiffrés** : toute personne possédant le lien ou le QR peut lire les données qu’il contient.
-- En ouverture directe via `file://`, le QR reste disponible mais encode uniquement une charge compacte préfixée `NMSP2:` : aucun chemin local du PC n’est incorporé. Le bouton de partage devient alors « Copier les données ».
-- Sur HTTPS (Vercel) ou `localhost`, le QR encode l’URL publique de la page avec la fiche dans le fragment `#p=…`. Les paramètres de requête éventuels de l’URL courante ne sont pas repris dans le QR.
-- Le générateur de code voyageur utilise `crypto.getRandomValues()` au lieu de `Math.random()`.
-- Les profils restent dans IndexedDB sur l’origine du site. Ce stockage local n’est pas chiffré et ne doit pas contenir de données sensibles.
-- Le service worker ne met en cache que la coque de l’application et les ressources explicitement connues.
-
-`SIGNATURE.txt` contient des empreintes SHA-256 pour le contrôle d’intégrité. Ce manifeste ne remplace pas une signature cryptographique d’auteur. Pour obtenir le badge GitHub **Verified**, les commits/tags de release doivent être signés avec une clé GPG/SSH ou un mécanisme de signature pris en charge par GitHub appartenant réellement à Haizenchi.
-
-## Déploiement
-
-Le projet ne nécessite aucune commande de build. Sur Vercel, importer le dépôt GitHub et conserver la racine du repo comme Root Directory.
-
-## Architecture
+This package is designed to live alongside the existing Vercel/web edition in the same GitHub repository:
 
 ```text
-index.html
-manifest.webmanifest
-sw.js
-README.md
-SIGNATURE.txt
-VENDOR-NOTICE.txt
-css/
-  style.css
-script/
-  script.js
-  vendor/
-    qrcode-browser.js
-assets/
-  icons/
-    atlas-emblem.svg
-    icon-192.png
-    icon-512.png
+repo/
+├── index.html                 # existing web app
+├── css/                       # existing web app
+├── script/                    # existing web app
+├── assets/                    # existing web app
+├── desktop/                   # desktop edition (this package)
+└── .github/workflows/
+    └── build-desktop.yml
 ```
 
-## Données partagées
+## What the desktop edition changes
 
-Les liens et QR codes n'incluent pas les images afin de garder une charge raisonnable. En `file://`, le QR contient une chaîne `NMSP2:<données>` et jamais le chemin du fichier local. Les fichiers JSON exportés, eux, peuvent contenir les images compressées.
+- Keeps the current NMS Passport v2.2 FR/EN interface and card engine.
+- Runs in its own native Windows application window through Tauri 2.
+- Works offline; no Vercel server is required to launch it.
+- Removes the need for the PWA install flow inside the desktop app.
+- PNG and JSON exports use the native Windows **Save As** dialog.
+- Image and JSON imports still use the normal operating-system file picker.
+- Local profiles remain stored locally in the embedded WebView data store.
+- The desktop app only exposes file-system read/write APIs for files explicitly selected by the user through a native dialog.
 
-Projet communautaire indépendant. No Man's Sky et ses éléments associés appartiennent à leurs ayants droit respectifs.
+## Easiest Windows build: GitHub Actions
+
+Copy the contents of this package into the root of your existing repository, commit and push it.
+
+Then on GitHub:
+
+1. Open **Actions**.
+2. Select **Build NMS Passport Desktop**.
+3. Click **Run workflow**.
+4. Wait for the Windows build to finish.
+5. Open the completed run and download the **NMS-Passport-Windows** artifact.
+
+The artifact contains the NSIS installer and the raw Windows executable produced by Tauri.
+
+You can also create and push a tag such as `desktop-v1.0.0`; the workflow will run automatically.
+
+## Local Windows build
+
+Tauri requires Rust, Microsoft C++ Build Tools and Microsoft Edge WebView2 for Windows development. Once those prerequisites are installed:
+
+```bash
+cd desktop
+npm install
+npm run desktop:build
+```
+
+The installer is generated under:
+
+```text
+desktop/src-tauri/target/release/bundle/nsis/
+```
+
+## Code signing
+
+The application metadata identifies **Haizenchi** as publisher/author, but Windows will still show an unknown/unverified publisher until the executable is signed with a real Windows code-signing certificate. No private signing key is included in this repository.
