@@ -1,6 +1,6 @@
 [package]
 name = "nms-passport"
-version = "2.0.0"
+version = "2.0.1"
 description = "NMS Passport Desktop"
 authors = ["Haizenchi"]
 edition = "2021"

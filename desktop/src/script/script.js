@@ -1,8 +1,8 @@
-/* NMS Passport Desktop v2.0.0 — Web core v2.2 — Haizenchi — bilingual FR/EN */
+/* NMS Passport Desktop v2.0.1 — Web core v2.2 — Haizenchi — bilingual FR/EN */
 (() => {
 'use strict';
 
-const APP_VERSION = '2.0.0';
+const APP_VERSION = '2.0.1';
 const DATA_SCHEMA_VERSION = '2.2';
 const APP_AUTHOR = 'Haizenchi';
 const BASE_W = 1600, BASE_H = 1000;
@@ -180,7 +180,7 @@ function applyLanguage(){
 async function setLanguage(lang){if(!SUPPORTED_LANGS.includes(lang)||lang===currentLang)return;currentLang=lang;try{localStorage.setItem('nms-passport-language',lang);}catch(_){}applyLanguage();await refreshProfiles();}
 
 function buildGlyphSections(){
-  document.querySelectorAll('.glyph-section').forEach(section=>{
+  document.querySelectorAll('[data-glyph-section]').forEach(section=>{
     const mod=section.dataset.glyphSection;
     const head=document.createElement('div');head.className='glyph-head';
     const strong=document.createElement('strong');strong.textContent=t('ui.portalAddress');
@@ -193,11 +193,11 @@ function buildGlyphSections(){
   const palette=$('glyphPalette');palette.replaceChildren();
   for(const [code,symbol,name] of GLYPHS){const b=document.createElement('button');b.type='button';b.className='glyph-choice';b.dataset.glyph=code;const title=document.createElement('b');title.textContent=`${symbol} ${code}`;const label=document.createElement('span');label.textContent=I18N[currentLang].glyphs[name]||name;b.append(title,label);palette.appendChild(b);}
 }
-function updateGlyphUI(module){const section=document.querySelector(`[data-glyph-section="${module}"]`);if(!section)return;section.querySelectorAll('.glyph-slot').forEach((b,i)=>{const code=state[module].glyphs[i];const info=GLYPHS.find(g=>g[0]===code);b.textContent=info?`${info[1]} ${code}`:'·';b.classList.toggle('empty',!code);});section.querySelector('.glyph-code').textContent=glyphCode(module);}
+function updateGlyphUI(module){const section=document.querySelector(`[data-glyph-section="${module}"]`);if(!section||!state[module])return;section.querySelectorAll('.glyph-slot').forEach((b,i)=>{const code=state[module].glyphs?.[i]||'';const info=GLYPHS.find(g=>g[0]===code);b.textContent=info?`${info[1]} ${code}`:'·';b.classList.toggle('empty',!code);});const codeEl=section.querySelector('.glyph-code');if(codeEl)codeEl.textContent=glyphCode(module);}
 function openGlyph(module,slot){activeGlyphTarget={module,slot};$('glyphDialog').showModal();}
 
 function buildMediaTools(){document.querySelectorAll('.media-tools').forEach(w=>{const mod=w.dataset.mediaTools;w.replaceChildren();for(const [key,label,min,max] of [['zoom',t('ui.zoom'),'1','4'],['x','X','-1','1'],['y','Y','-1','1']]){const row=document.createElement('div');row.className='slider-line';const span=document.createElement('span');span.textContent=label;const input=document.createElement('input');input.dataset.mediaRange=key;input.dataset.module=mod;input.type='range';input.min=min;input.max=max;input.step='0.01';input.addEventListener('input',()=>{state[mod].media[key]=Number(input.value);updateMediaTools(mod);render();});const output=document.createElement('output');row.append(span,input,output);w.appendChild(row);}});}
-function updateMediaTools(module){const w=document.querySelector(`[data-media-tools="${module}"]`);const m=state[module].media;w.hidden=!m.data;w.querySelectorAll('[data-media-range]').forEach(r=>{const key=r.dataset.mediaRange;r.value=m[key];r.nextElementSibling.value=key==='zoom'?Number(m[key]).toFixed(2)+'×':Math.round(Number(m[key])*100)+'%';});}
+function updateMediaTools(module){const w=document.querySelector(`[data-media-tools="${module}"]`);const m=state[module]?.media;if(!w||!m)return;w.hidden=!m.data;w.querySelectorAll('[data-media-range]').forEach(r=>{const key=r.dataset.mediaRange;r.value=m[key];const out=r.nextElementSibling;if(out)out.value=key==='zoom'?Number(m[key]).toFixed(2)+'×':Math.round(Number(m[key])*100)+'%';});}
 
 const bindings = {
   idName:['identity','name'],idRace:['identity','race'],idRole:['identity','role'],idCode:['identity','code'],idDiscord:['identity','discord'],idGalaxy:['identity','galaxy'],idGalaxyCustom:['identity','galaxyCustom'],

@@ -1,0 +1,28 @@
+NMS Passport Desktop v2.0.1 — Runtime Fix Report
+Date: 2026-08-30
+
+Root cause corrected:
+- buildGlyphSections() targeted a non-existent .glyph-section class while the HTML uses data-glyph-section attributes.
+- The glyph UI was therefore never built, and updateGlyphUI() then attempted to write to a missing .glyph-code node during startup.
+- That aborted the application initialization sequence, leaving the canvas, translations, module tabs, image controls and other JavaScript-driven functions inactive.
+
+Corrections:
+- buildGlyphSections() now targets [data-glyph-section].
+- updateGlyphUI() now safely handles missing/optional nodes and absent glyph values.
+- updateMediaTools() now safely handles missing/optional nodes and output elements.
+- Version bumped to 2.0.1 in application/package/Tauri/build metadata.
+- GitHub artifact name updated to NMS-Passport-Desktop-v2.0.1-Windows.
+
+Validation performed:
+- JavaScript syntax check: PASS.
+- HTML/JS ID reference consistency check: PASS (no referenced literal IDs missing).
+- Headless Chromium runtime smoke test: PASS.
+  * 4 glyph sections initialized.
+  * 48 glyph slots initialized.
+  * Identity / Ship / Base / Discovery tab switching works.
+  * FR/EN language switching works.
+  * Canvas renders non-empty content.
+  * Form input event updates without runtime exception.
+- Tauri global dialog/fs access pattern checked against Tauri v2 withGlobalTauri API usage.
+
+Final Windows binary still needs to be compiled by the GitHub Actions workflow and tested in the actual Tauri/WebView2 Windows runtime.

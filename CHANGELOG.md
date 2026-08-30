@@ -1,3 +1,10 @@
+# NMS Passport Desktop v2.0.1
+
+## Runtime fix
+- Fixed glyph-section initialization selector that stopped the JavaScript startup sequence.
+- Restored card rendering, language switching, module tabs, image controls, profiles and export controls.
+- Added defensive guards around glyph and media UI refreshes so optional/missing UI nodes cannot abort initialization.
+
 # Changelog
 
 ## Desktop 2.0.0

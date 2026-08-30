@@ -1,4 +1,4 @@
-# NMS Passport Desktop v2.0.0
+# NMS Passport Desktop v2.0.1
 
 Desktop edition of **NMS Passport**, by **Haizenchi**.
 
@@ -39,13 +39,13 @@ Copy this package into the root of the repository, commit and push it. Then:
 1. Open **Actions** on GitHub.
 2. Select **Build NMS Passport Desktop**.
 3. Click **Run workflow**.
-4. Download the `NMS-Passport-Desktop-v2.0.0-Windows` artifact when the job is green.
+4. Download the `NMS-Passport-Desktop-v2.0.1-Windows` artifact when the job is green.
 
 The workflow also runs automatically for tags matching `desktop-v*`, for example:
 
 ```bash
-git tag desktop-v2.0.0
-git push origin desktop-v2.0.0
+git tag desktop-v2.0.1
+git push origin desktop-v2.0.1
 ```
 
 ## Local Windows build
